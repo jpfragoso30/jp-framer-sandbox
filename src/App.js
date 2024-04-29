@@ -4,14 +4,13 @@ import { animate, motion, useMotionValue, useTransform } from "framer-motion";
 function App() {
     const [status, setStatus] = useState("Waiting...");
     const count = useMotionValue(5);
-    const time = useTransform(count, Math.round);
+    const time = useTransform(count, Math.ceil);
 
     useEffect(() => {
-        const animation = animate(count, 0, { duration: 5 });
-
-        setTimeout(() => {
-            setStatus("Finished!");
-        }, 5 * 1000);
+        const animation = animate(count, 0, {
+            duration: 5,
+            ease: "linear",
+        }).then(() => setStatus("Finished!"));
 
         return animation.stop;
     }, []);
